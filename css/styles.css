@@ -1433,3 +1433,368 @@ textarea:focus-visible {
     animation: none;
   }
 }
+
+/* =============================================
+   19. Landing Page Styles (Emotional Maturity)
+   ============================================= */
+
+/* Hero Compact & Centered */
+.hero-compact {
+  min-height: 70vh;
+  padding: var(--space-5xl) 0 var(--space-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-compact .hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-content-centered {
+  text-align: center;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-content-centered .hero-title {
+  text-align: center;
+}
+
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: var(--space-xl) 0 var(--space-2xl);
+  text-align: center;
+}
+
+/* Section Alt Background */
+.section-alt {
+  background: var(--bg-secondary);
+}
+
+/* Content Blocks */
+.content-block {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.content-block p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin-bottom: var(--space-lg);
+}
+
+.content-block p:last-child {
+  margin-bottom: 0;
+}
+
+.content-subtitle {
+  margin-bottom: var(--space-lg) !important;
+}
+
+/* Feature List */
+.feature-list {
+  margin-top: var(--space-md);
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: var(--space-xl);
+  margin-bottom: var(--space-md);
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+}
+
+.feature-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Format Section Grid */
+.format-grid {
+  display: grid;
+  gap: var(--space-xl);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .format-grid {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+  }
+}
+
+.format-note {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(74, 124, 89, 0.05);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.format-note p {
+  font-size: 1rem !important;
+  margin-bottom: var(--space-sm) !important;
+}
+
+.format-note p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Format Details */
+.format-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.format-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.format-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+}
+
+.format-icon [data-lucide] {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-inverse);
+}
+
+.format-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.format-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+.format-value {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.format-conclusion {
+  margin-top: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+/* Pricing Description */
+.pricing-description {
+  flex: 1;
+  margin-bottom: var(--space-xl);
+}
+
+.pricing-description p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* FAQ Accordion Section */
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  padding: 0;
+  overflow: hidden;
+}
+
+.faq-item:hover {
+  transform: translateY(-2px);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-base);
+}
+
+.faq-question:hover {
+  color: var(--accent-primary);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent-primary);
+  transition: transform var(--transition-base);
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer-content {
+  padding: 0 var(--space-xl) var(--space-xl);
+  border-top: 1px solid var(--glass-border);
+  padding-top: var(--space-lg);
+}
+
+.faq-answer p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* FAQ Contact Block */
+.faq-contact {
+  max-width: 900px;
+  margin: var(--space-2xl) auto 0;
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.faq-contact p {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-lg);
+}
+
+/* Telegram Button */
+.btn-telegram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background: #0088cc;
+  color: var(--text-inverse);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 16px rgba(0, 136, 204, 0.3);
+}
+
+.btn-telegram:hover {
+  background: #006699;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 136, 204, 0.4);
+}
+
+.btn-telegram [data-lucide] {
+  width: 20px;
+  height: 20px;
+}
+
+/* Pricing Note */
+.pricing-note {
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+/* FAQ Note */
+.faq-note {
+  margin-top: var(--space-md) !important;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+  font-size: 0.9rem !important;
+  color: var(--text-muted) !important;
+  font-style: italic;
+}
+
+/* Format Highlight Block (inline in card) */
+.format-highlight-inline {
+  margin-top: var(--space-lg);
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, rgba(74, 124, 89, 0.1) 0%, rgba(107, 155, 122, 0.1) 100%);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+}
+
+.format-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.format-highlight-inline .format-highlight-item:first-child {
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(74, 124, 89, 0.2);
+}
+
+.format-highlight-item [data-lucide] {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent-primary);
+}
+

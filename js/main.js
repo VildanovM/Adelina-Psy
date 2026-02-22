@@ -407,6 +407,127 @@
   }
 
   // =============================================
+  // 11. Cookie Consent + Analytics Loader
+  // =============================================
+  function initCookieConsent() {
+    const CONSENT_KEY = 'cookie_analytics_consent_v1';
+    const CONSENT_ACCEPTED = 'accepted';
+    const CONSENT_REJECTED = 'rejected';
+    const YANDEX_METRIKA_ID = 106437479;
+
+    const getConsent = () => {
+      try {
+        return localStorage.getItem(CONSENT_KEY);
+      } catch (error) {
+        return null;
+      }
+    };
+
+    const setConsent = (value) => {
+      try {
+        localStorage.setItem(CONSENT_KEY, value);
+      } catch (error) {
+        // Ignore storage errors (private mode, blocked storage, etc.)
+      }
+    };
+
+    const loadYandexMetrika = () => {
+      if (window.__yandexMetrikaLoaded) return;
+      window.__yandexMetrikaLoaded = true;
+
+      (function(m, e, t, r, i, k, a) {
+        m[i] = m[i] || function() {
+          (m[i].a = m[i].a || []).push(arguments);
+        };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j += 1) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        k = e.createElement(t);
+        a = e.getElementsByTagName(t)[0];
+        k.async = 1;
+        k.src = r;
+        a.parentNode.insertBefore(k, a);
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+      window.ym(YANDEX_METRIKA_ID, 'init', {
+        ssr: true,
+        webvisor: true,
+        clickmap: true,
+        ecommerce: 'dataLayer',
+        referrer: document.referrer,
+        url: location.href,
+        accurateTrackBounce: true,
+        trackLinks: true
+      });
+    };
+
+    const removeBanner = () => {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) {
+        banner.remove();
+      }
+    };
+
+    const showBanner = () => {
+      if (document.getElementById('cookie-banner')) return;
+
+      const banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      banner.className = 'cookie-banner';
+      banner.setAttribute('role', 'dialog');
+      banner.setAttribute('aria-live', 'polite');
+      banner.setAttribute('aria-label', 'Согласие на использование cookie');
+
+      banner.innerHTML = `
+        <div class="cookie-banner__content">
+          <p>
+            Мы используем cookie для аналитики посещаемости (Яндекс.Метрика).
+            Подробнее в <a href="/legal/privacy-policy/">политике конфиденциальности</a>.
+          </p>
+          <div class="cookie-banner__actions">
+            <button type="button" class="btn-secondary cookie-banner__decline">Отклонить</button>
+            <button type="button" class="btn-primary cookie-banner__accept">Принять</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(banner);
+
+      const acceptButton = banner.querySelector('.cookie-banner__accept');
+      const declineButton = banner.querySelector('.cookie-banner__decline');
+
+      if (acceptButton) {
+        acceptButton.addEventListener('click', () => {
+          setConsent(CONSENT_ACCEPTED);
+          loadYandexMetrika();
+          removeBanner();
+        });
+      }
+
+      if (declineButton) {
+        declineButton.addEventListener('click', () => {
+          setConsent(CONSENT_REJECTED);
+          removeBanner();
+        });
+      }
+    };
+
+    const consentValue = getConsent();
+
+    if (consentValue === CONSENT_ACCEPTED) {
+      loadYandexMetrika();
+      return;
+    }
+
+    if (consentValue !== CONSENT_REJECTED) {
+      showBanner();
+    }
+  }
+
+  // =============================================
   // Initialize All Functions
   // =============================================
   function init() {
@@ -418,6 +539,7 @@
     initActiveNavLink();
     initFormHandling();
     initIcons();
+    initCookieConsent();
     // initParallax(); // Uncomment if you want parallax effect
   }
 

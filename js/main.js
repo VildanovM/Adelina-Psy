@@ -413,7 +413,7 @@
     const CONSENT_KEY = 'cookie_analytics_consent_v1';
     const CONSENT_ACCEPTED = 'accepted';
     const CONSENT_REJECTED = 'rejected';
-    const YANDEX_METRIKA_ID = 106437479;
+    const YANDEX_METRIKA_ID = 107256702;
 
     const getConsent = () => {
       try {
@@ -457,11 +457,6 @@
         trackLinks: true,
         accurateTrackBounce: true,
         webvisor: true
-      });
-
-      // Explicit first pageview after consent-driven initialization.
-      window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href, {
-        referer: document.referrer
       });
     };
 

@@ -453,14 +453,15 @@
       })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
       window.ym(YANDEX_METRIKA_ID, 'init', {
-        ssr: true,
-        webvisor: true,
         clickmap: true,
-        ecommerce: 'dataLayer',
-        referrer: document.referrer,
-        url: location.href,
+        trackLinks: true,
         accurateTrackBounce: true,
-        trackLinks: true
+        webvisor: true
+      });
+
+      // Explicit first pageview after consent-driven initialization.
+      window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href, {
+        referer: document.referrer
       });
     };
 

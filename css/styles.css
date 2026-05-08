@@ -1347,9 +1347,11 @@ strong {
   transform: translateY(-2px);
 }
 
-.social-links [data-lucide] {
+.social-links [data-lucide],
+.social-links svg {
   width: 20px;
   height: 20px;
+  display: block;
 }
 
 .footer-bottom {

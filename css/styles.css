@@ -2023,3 +2023,404 @@ textarea:focus-visible {
   margin-bottom: var(--space-xs);
 }
 
+/* =============================================
+   21. Course Landing Page (6 Steps to Freedom)
+   ============================================= */
+
+.course-page .hero-course {
+  min-height: 90vh;
+  padding: var(--space-5xl) 0 var(--space-3xl);
+}
+
+.hero-title-course {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.05;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent-primary);
+  margin-bottom: var(--space-md);
+}
+
+.hero-lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: var(--space-md) 0 var(--space-sm);
+  line-height: 1.3;
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 420px;
+  margin-bottom: var(--space-2xl);
+  line-height: 1.6;
+}
+
+.profile-image-course {
+  max-width: 420px;
+  margin-left: auto;
+}
+
+.section-intro {
+  text-align: center;
+  max-width: 640px;
+  margin: calc(var(--space-2xl) * -1) auto var(--space-3xl);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Author split */
+.author-split {
+  display: grid;
+  gap: var(--space-2xl);
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .author-split {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--space-3xl);
+  }
+}
+
+.author-photo .profile-image {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.author-text {
+  padding: var(--space-2xl);
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin-bottom: var(--space-lg);
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.author-text p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-bottom: var(--space-lg);
+}
+
+.author-quote {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
+  border-left: 3px solid var(--accent-primary);
+  background: rgba(74, 124, 89, 0.06);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Audience cards */
+.audience-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .audience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .audience-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
+.audience-card {
+  position: relative;
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.audience-num {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--accent-soft);
+  opacity: 0.7;
+}
+
+.audience-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  margin-bottom: var(--space-xs);
+}
+
+.audience-icon [data-lucide] {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-inverse);
+}
+
+.audience-card h3 {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  padding-right: var(--space-2xl);
+}
+
+.audience-card p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.callout-banner {
+  max-width: 800px;
+  margin: var(--space-3xl) auto 0;
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.callout-banner p {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Request tags */
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.tag-chip:hover {
+  transform: translateY(-2px);
+}
+
+.tag-chip [data-lucide] {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke: var(--accent-primary);
+}
+
+/* Methodology */
+.methodology-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .methodology-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.method-card {
+  padding: var(--space-xl);
+}
+
+.method-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-accent);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+}
+
+.method-icon [data-lucide] {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-inverse);
+}
+
+.method-card h3 {
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  line-height: 1.4;
+}
+
+.method-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Program steps */
+.steps-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step-card {
+  padding: var(--space-xl);
+  text-align: center;
+  position: relative;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--gradient-accent);
+  color: var(--text-inverse);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 50%;
+  margin-bottom: var(--space-md);
+}
+
+.step-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin-bottom: var(--space-sm);
+}
+
+.step-card p {
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* CTA */
+.course-cta {
+  padding-bottom: var(--space-5xl);
+}
+
+.cta-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-3xl);
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: var(--space-md);
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg) !important;
+}
+
+.cta-card > p:not(.cta-subtitle) {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-2xl);
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-actions .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.cta-actions .btn-primary [data-lucide] {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .course-page .hero-course .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .course-page .hero-tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .profile-image-course {
+    margin: var(--space-xl) auto 0;
+  }
+
+  .author-photo {
+    order: -1;
+  }
+}
+

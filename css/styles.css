@@ -379,6 +379,10 @@ strong {
   overflow: visible;
 }
 
+.nav-link-mobile-only {
+  display: none;
+}
+
 .logo {
   display: flex;
   flex-direction: column;
@@ -529,6 +533,10 @@ strong {
   }
 
   .nav-link-program {
+    display: inline-block;
+  }
+
+  .nav-link-mobile-only {
     display: inline-block;
   }
 

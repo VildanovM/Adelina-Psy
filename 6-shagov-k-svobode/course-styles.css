@@ -611,6 +611,25 @@ strong {
   margin-top: var(--space-xl);
 }
 
+.hero-actions.cta-actions {
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-actions.cta-actions .hero-cta {
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hero-actions.cta-actions .btn-primary.hero-cta {
+  border: 1px solid transparent;
+}
+
 .hero-image {
   display: flex;
   justify-content: center;

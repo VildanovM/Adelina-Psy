@@ -414,6 +414,7 @@
     const viewport = document.getElementById('review-lightbox-viewport');
     const image = document.getElementById('review-lightbox-image');
     const zoomLevelEl = lightbox ? lightbox.querySelector('.review-lightbox__zoom-level') : null;
+    const toolbar = document.getElementById('review-lightbox-toolbar');
     const reviewsGrid = document.querySelector('.reviews-grid');
 
     if (!lightbox || !viewport || !image || !reviewsGrid) return;
@@ -421,6 +422,7 @@
     const MIN_SCALE = 1;
     const MAX_SCALE = 4;
     const ZOOM_STEP = 0.25;
+    const TOOLBAR_HIDE_DELAY = 2000;
 
     let scale = 1;
     let translateX = 0;
@@ -432,8 +434,23 @@
     let dragOriginY = 0;
     let lastTouchDistance = 0;
     let activePointerId = null;
+    let toolbarHideTimer = null;
 
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const hideToolbar = () => {
+      if (!toolbar) return;
+      clearTimeout(toolbarHideTimer);
+      toolbarHideTimer = null;
+      toolbar.classList.remove('is-visible');
+    };
+
+    const showToolbar = () => {
+      if (!toolbar) return;
+      toolbar.classList.add('is-visible');
+      clearTimeout(toolbarHideTimer);
+      toolbarHideTimer = setTimeout(hideToolbar, TOOLBAR_HIDE_DELAY);
+    };
 
     const updateZoomButtons = () => {
       lightbox.querySelectorAll('[data-review-zoom]').forEach((button) => {
@@ -459,16 +476,20 @@
       translateX = 0;
       translateY = 0;
       applyTransform();
+      hideToolbar();
     };
 
     const setScale = (nextScale, originX, originY) => {
+      const previousScale = scale;
       const clampedScale = clamp(nextScale, MIN_SCALE, MAX_SCALE);
 
-      if (originX != null && originY != null && clampedScale !== scale) {
+      if (clampedScale === previousScale) return;
+
+      if (originX != null && originY != null) {
         const rect = image.getBoundingClientRect();
         const offsetX = originX - rect.left - rect.width / 2;
         const offsetY = originY - rect.top - rect.height / 2;
-        const scaleRatio = clampedScale / scale;
+        const scaleRatio = clampedScale / previousScale;
 
         translateX = (translateX - offsetX) * scaleRatio + offsetX;
         translateY = (translateY - offsetY) * scaleRatio + offsetY;
@@ -479,6 +500,9 @@
       if (scale === 1) {
         translateX = 0;
         translateY = 0;
+        hideToolbar();
+      } else {
+        showToolbar();
       }
 
       applyTransform();
@@ -510,6 +534,7 @@
       document.body.style.overflow = '';
       image.removeAttribute('src');
       resetTransform();
+      hideToolbar();
     };
 
     reviewsGrid.addEventListener('click', (event) => {
@@ -544,8 +569,6 @@
           setScale(scale + ZOOM_STEP);
         } else if (action === 'out') {
           setScale(scale - ZOOM_STEP);
-        } else if (action === 'reset') {
-          resetTransform();
         }
       });
     });
@@ -631,8 +654,6 @@
         setScale(scale + ZOOM_STEP);
       } else if (event.key === '-') {
         setScale(scale - ZOOM_STEP);
-      } else if (event.key === '0') {
-        resetTransform();
       }
     });
   }

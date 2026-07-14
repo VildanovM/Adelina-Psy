@@ -41,6 +41,7 @@ Psychologist/
 │   ├── STRUCTURE.md           # Структура страницы
 │   ├── CONTENT.md             # Контент
 │   ├── BROWSERS.md            # Кроссбраузерная вёрстка
+│   ├── COMMIT.md              # Commit и push в main
 │   └── TECHNICAL.md           # Этот файл
 └── README.md                  # Описание проекта
 ```
@@ -408,6 +409,8 @@ not IE 11
 ---
 
 ## Деплой
+
+Процесс commit и push в `main`: **[COMMIT.md](./COMMIT.md)**.
 
 ### Варианты хостинга
 

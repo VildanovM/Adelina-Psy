@@ -2558,12 +2558,10 @@ textarea:focus-visible {
 
 .reviews-grid .review-card {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
   width: 100%;
   min-width: 0;
+  align-self: start;
   padding: 10px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
@@ -2576,6 +2574,8 @@ textarea:focus-visible {
   text-align: center;
   font: inherit;
   color: inherit;
+  user-select: none;
+  -webkit-user-select: none;
   transition: box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
@@ -2590,8 +2590,12 @@ textarea:focus-visible {
 .review-card__media {
   position: relative;
   display: block;
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
+  max-height: 300px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: calc(var(--radius-sm) - 2px);
 }
 
 .reviews-grid .review-card img {
@@ -2602,7 +2606,7 @@ textarea:focus-visible {
   height: auto;
   margin: 0 auto;
   object-fit: contain;
-  border-radius: calc(var(--radius-sm) - 2px);
+  vertical-align: top;
   transition: transform var(--transition-slow);
 }
 
@@ -2610,6 +2614,7 @@ textarea:focus-visible {
   position: absolute;
   left: 50%;
   bottom: var(--space-md);
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2621,8 +2626,9 @@ textarea:focus-visible {
   font-size: 0.8125rem;
   font-weight: 500;
   opacity: 0;
+  visibility: hidden;
   transform: translate(-50%, 8px);
-  transition: opacity var(--transition-base), transform var(--transition-base);
+  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
   pointer-events: none;
   white-space: nowrap;
 }
@@ -2640,6 +2646,7 @@ textarea:focus-visible {
 .review-card__media:hover .review-card__hint,
 .review-card:focus-visible .review-card__hint {
   opacity: 1;
+  visibility: visible;
   transform: translate(-50%, 0);
 }
 

@@ -40,6 +40,7 @@ Psychologist/
 │   ├── DESIGN.md              # Дизайн-система
 │   ├── STRUCTURE.md           # Структура страницы
 │   ├── CONTENT.md             # Контент
+│   ├── BROWSERS.md            # Кроссбраузерная вёрстка
 │   └── TECHNICAL.md           # Этот файл
 └── README.md                  # Описание проекта
 ```
@@ -301,6 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
 ---
 
 ## Браузерная поддержка
+
+Подробный гайд по кроссбраузерной вёрстке: **[BROWSERS.md](./BROWSERS.md)** — Safari, Firefox, Chrome, проверка as is до деплоя.
 
 ### Целевые браузеры
 

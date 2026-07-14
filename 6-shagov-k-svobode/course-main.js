@@ -414,9 +414,9 @@
     const viewport = document.getElementById('review-lightbox-viewport');
     const image = document.getElementById('review-lightbox-image');
     const zoomLevelEl = lightbox ? lightbox.querySelector('.review-lightbox__zoom-level') : null;
-    const reviewCards = document.querySelectorAll('.review-card[data-review-src]');
+    const reviewsGrid = document.querySelector('.reviews-grid');
 
-    if (!lightbox || !viewport || !image || !reviewCards.length) return;
+    if (!lightbox || !viewport || !image || !reviewsGrid) return;
 
     const MIN_SCALE = 1;
     const MAX_SCALE = 4;
@@ -488,11 +488,15 @@
       image.src = src;
       image.alt = alt || 'Отзыв участника программы';
       resetTransform();
-      lightbox.hidden = false;
+      lightbox.removeAttribute('hidden');
       lightbox.setAttribute('aria-hidden', 'false');
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
-      lightbox.querySelector('.review-lightbox__close').focus();
+
+      const closeButton = lightbox.querySelector('.review-lightbox__close');
+      if (closeButton) {
+        closeButton.focus();
+      }
 
       image.onload = () => {
         resetTransform();
@@ -500,20 +504,33 @@
     };
 
     const closeLightbox = () => {
-      lightbox.hidden = true;
+      lightbox.setAttribute('hidden', '');
       lightbox.setAttribute('aria-hidden', 'true');
       lightbox.classList.remove('is-open');
       document.body.style.overflow = '';
-      image.src = '';
+      image.removeAttribute('src');
       resetTransform();
     };
 
-    reviewCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        const src = card.getAttribute('data-review-src');
-        const cardImage = card.querySelector('img');
-        openLightbox(src, cardImage ? cardImage.alt : '');
-      });
+    reviewsGrid.addEventListener('click', (event) => {
+      const card = event.target.closest('.review-card[data-review-src]');
+      if (!card || !reviewsGrid.contains(card)) return;
+
+      const src = card.getAttribute('data-review-src');
+      const cardImage = card.querySelector('img');
+      openLightbox(src, cardImage ? cardImage.alt : '');
+    });
+
+    reviewsGrid.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      const card = event.target.closest('.review-card[data-review-src]');
+      if (!card || !reviewsGrid.contains(card)) return;
+
+      event.preventDefault();
+      const src = card.getAttribute('data-review-src');
+      const cardImage = card.querySelector('img');
+      openLightbox(src, cardImage ? cardImage.alt : '');
     });
 
     lightbox.querySelectorAll('[data-review-close]').forEach((element) => {
@@ -534,7 +551,7 @@
     });
 
     viewport.addEventListener('wheel', (event) => {
-      if (lightbox.hidden) return;
+      if (lightbox.hasAttribute('hidden')) return;
       event.preventDefault();
 
       const delta = event.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
@@ -606,7 +623,7 @@
     });
 
     document.addEventListener('keydown', (event) => {
-      if (lightbox.hidden) return;
+      if (lightbox.hasAttribute('hidden')) return;
 
       if (event.key === 'Escape') {
         closeLightbox();

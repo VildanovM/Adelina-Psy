@@ -665,7 +665,7 @@
     const CONSENT_KEY = 'cookie_analytics_consent_v1';
     const CONSENT_ACCEPTED = 'accepted';
     const CONSENT_REJECTED = 'rejected';
-    const YANDEX_METRIKA_ID = 106437479;
+    const YANDEX_METRIKA_ID = 110741959;
 
     const getConsent = () => {
       try {
@@ -687,6 +687,8 @@
       if (window.__yandexMetrikaLoaded) return;
       window.__yandexMetrikaLoaded = true;
 
+      const metrikaScriptSrc = `https://mc.yandex.ru/metrika/tag.js?id=${YANDEX_METRIKA_ID}`;
+
       (function(m, e, t, r, i, k, a) {
         m[i] = m[i] || function() {
           (m[i].a = m[i].a || []).push(arguments);
@@ -702,18 +704,17 @@
         k.async = 1;
         k.src = r;
         a.parentNode.insertBefore(k, a);
-      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+      })(window, document, 'script', metrikaScriptSrc, 'ym');
 
       window.ym(YANDEX_METRIKA_ID, 'init', {
+        ssr: true,
+        webvisor: true,
         clickmap: true,
-        trackLinks: true,
+        ecommerce: 'dataLayer',
+        referrer: document.referrer,
+        url: location.href,
         accurateTrackBounce: true,
-        webvisor: true
-      });
-
-      // Explicit first pageview after consent-driven initialization.
-      window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href, {
-        referer: document.referrer
+        trackLinks: true
       });
     };
 

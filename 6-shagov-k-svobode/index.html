@@ -58,6 +58,7 @@
         <a href="#for-whom" class="nav-link">Для кого</a>
         <a href="#methodology" class="nav-link">Методология</a>
         <a href="#format" class="nav-link">Формат</a>
+        <a href="#reviews" class="nav-link">Отзывы</a>
         <a href="#author" class="nav-link">Об авторе</a>
       </div>
 
@@ -290,6 +291,36 @@
       </div>
     </section>
 
+    <!-- Reviews -->
+    <section class="section section-alt" id="reviews">
+      <div class="container">
+        <h2 class="section-title reveal">Отзывы</h2>
+        <p class="section-intro reveal">Реальные отзывы участников программы. Нажмите на отзыв, чтобы открыть и&nbsp;приблизить.</p>
+
+        <div class="reviews-grid">
+          <button type="button" class="review-card glass-card reveal stagger-item" data-review-src="images/review-2.png" aria-label="Открыть отзыв участника программы">
+            <span class="review-card__media">
+              <img src="images/review-2.png" alt="Отзыв участницы: программа «6 шагов от тревоги» помогла справляться с тревогой" width="400" height="600" loading="lazy">
+              <span class="review-card__hint">
+                <i data-lucide="zoom-in"></i>
+                Открыть отзыв
+              </span>
+            </span>
+          </button>
+
+          <button type="button" class="review-card glass-card reveal stagger-item" data-review-src="images/review-1.png" aria-label="Открыть отзыв участника программы">
+            <span class="review-card__media">
+              <img src="images/review-1.png" alt="Отзыв участника: понравились короткие аудио и практики" width="400" height="600" loading="lazy">
+              <span class="review-card__hint">
+                <i data-lucide="zoom-in"></i>
+                Открыть отзыв
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Pricing -->
     <section class="section" id="pricing">
       <div class="container">
@@ -403,6 +434,33 @@
       </div>
     </div>
   </footer>
+
+  <div class="review-lightbox" id="review-lightbox" hidden aria-hidden="true">
+    <div class="review-lightbox__backdrop" data-review-close></div>
+
+    <button type="button" class="review-lightbox__close" data-review-close aria-label="Закрыть отзыв">
+      <span class="review-lightbox__close-icon" aria-hidden="true">×</span>
+    </button>
+
+    <div class="review-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Просмотр отзыва">
+      <div class="review-lightbox__toolbar">
+        <button type="button" class="review-lightbox__zoom-btn" data-review-zoom="out" aria-label="Отдалить">
+          <i data-lucide="zoom-out"></i>
+        </button>
+        <span class="review-lightbox__zoom-level" aria-live="polite">100%</span>
+        <button type="button" class="review-lightbox__zoom-btn" data-review-zoom="in" aria-label="Приблизить">
+          <i data-lucide="zoom-in"></i>
+        </button>
+        <button type="button" class="review-lightbox__zoom-btn" data-review-zoom="reset" aria-label="Сбросить масштаб">
+          <i data-lucide="maximize-2"></i>
+        </button>
+      </div>
+
+      <div class="review-lightbox__viewport" id="review-lightbox-viewport">
+        <img class="review-lightbox__image" id="review-lightbox-image" src="" alt="Отзыв участника программы">
+      </div>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="course-main.js"></script>

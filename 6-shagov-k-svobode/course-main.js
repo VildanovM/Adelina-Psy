@@ -407,7 +407,221 @@
   }
 
   // =============================================
-  // 11. Cookie Consent + Analytics Loader
+  // 11. Review Lightbox with Zoom
+  // =============================================
+  function initReviewLightbox() {
+    const lightbox = document.getElementById('review-lightbox');
+    const viewport = document.getElementById('review-lightbox-viewport');
+    const image = document.getElementById('review-lightbox-image');
+    const zoomLevelEl = lightbox ? lightbox.querySelector('.review-lightbox__zoom-level') : null;
+    const reviewCards = document.querySelectorAll('.review-card[data-review-src]');
+
+    if (!lightbox || !viewport || !image || !reviewCards.length) return;
+
+    const MIN_SCALE = 1;
+    const MAX_SCALE = 4;
+    const ZOOM_STEP = 0.25;
+
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragOriginX = 0;
+    let dragOriginY = 0;
+    let lastTouchDistance = 0;
+    let activePointerId = null;
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const updateZoomButtons = () => {
+      lightbox.querySelectorAll('[data-review-zoom]').forEach((button) => {
+        const action = button.getAttribute('data-review-zoom');
+        if (action === 'in') {
+          button.disabled = scale >= MAX_SCALE;
+        } else if (action === 'out') {
+          button.disabled = scale <= MIN_SCALE;
+        }
+      });
+    };
+
+    const applyTransform = () => {
+      image.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      if (zoomLevelEl) {
+        zoomLevelEl.textContent = `${Math.round(scale * 100)}%`;
+      }
+      updateZoomButtons();
+    };
+
+    const resetTransform = () => {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    };
+
+    const setScale = (nextScale, originX, originY) => {
+      const clampedScale = clamp(nextScale, MIN_SCALE, MAX_SCALE);
+
+      if (originX != null && originY != null && clampedScale !== scale) {
+        const rect = image.getBoundingClientRect();
+        const offsetX = originX - rect.left - rect.width / 2;
+        const offsetY = originY - rect.top - rect.height / 2;
+        const scaleRatio = clampedScale / scale;
+
+        translateX = (translateX - offsetX) * scaleRatio + offsetX;
+        translateY = (translateY - offsetY) * scaleRatio + offsetY;
+      }
+
+      scale = clampedScale;
+
+      if (scale === 1) {
+        translateX = 0;
+        translateY = 0;
+      }
+
+      applyTransform();
+    };
+
+    const openLightbox = (src, alt) => {
+      image.src = src;
+      image.alt = alt || 'Отзыв участника программы';
+      resetTransform();
+      lightbox.hidden = false;
+      lightbox.setAttribute('aria-hidden', 'false');
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      lightbox.querySelector('.review-lightbox__close').focus();
+
+      image.onload = () => {
+        resetTransform();
+      };
+    };
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+      image.src = '';
+      resetTransform();
+    };
+
+    reviewCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const src = card.getAttribute('data-review-src');
+        const cardImage = card.querySelector('img');
+        openLightbox(src, cardImage ? cardImage.alt : '');
+      });
+    });
+
+    lightbox.querySelectorAll('[data-review-close]').forEach((element) => {
+      element.addEventListener('click', closeLightbox);
+    });
+
+    lightbox.querySelectorAll('[data-review-zoom]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const action = button.getAttribute('data-review-zoom');
+        if (action === 'in') {
+          setScale(scale + ZOOM_STEP);
+        } else if (action === 'out') {
+          setScale(scale - ZOOM_STEP);
+        } else if (action === 'reset') {
+          resetTransform();
+        }
+      });
+    });
+
+    viewport.addEventListener('wheel', (event) => {
+      if (lightbox.hidden) return;
+      event.preventDefault();
+
+      const delta = event.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
+      setScale(scale + delta, event.clientX, event.clientY);
+    }, { passive: false });
+
+    viewport.addEventListener('pointerdown', (event) => {
+      if (scale <= 1) return;
+      isDragging = true;
+      activePointerId = event.pointerId;
+      dragStartX = event.clientX;
+      dragStartY = event.clientY;
+      dragOriginX = translateX;
+      dragOriginY = translateY;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(event.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (event) => {
+      if (!isDragging || event.pointerId !== activePointerId) return;
+
+      translateX = dragOriginX + (event.clientX - dragStartX);
+      translateY = dragOriginY + (event.clientY - dragStartY);
+      applyTransform();
+    });
+
+    const stopDragging = (event) => {
+      if (!isDragging || (event && event.pointerId !== activePointerId)) return;
+      isDragging = false;
+      activePointerId = null;
+      viewport.classList.remove('is-dragging');
+    };
+
+    viewport.addEventListener('pointerup', stopDragging);
+    viewport.addEventListener('pointercancel', stopDragging);
+
+    viewport.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 2) {
+        const [touchA, touchB] = event.touches;
+        lastTouchDistance = Math.hypot(
+          touchA.clientX - touchB.clientX,
+          touchA.clientY - touchB.clientY
+        );
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchmove', (event) => {
+      if (event.touches.length !== 2) return;
+      event.preventDefault();
+
+      const [touchA, touchB] = event.touches;
+      const distance = Math.hypot(
+        touchA.clientX - touchB.clientX,
+        touchA.clientY - touchB.clientY
+      );
+
+      if (lastTouchDistance > 0) {
+        const centerX = (touchA.clientX + touchB.clientX) / 2;
+        const centerY = (touchA.clientY + touchB.clientY) / 2;
+        const pinchDelta = (distance - lastTouchDistance) * 0.01;
+        setScale(scale + pinchDelta, centerX, centerY);
+      }
+
+      lastTouchDistance = distance;
+    }, { passive: false });
+
+    viewport.addEventListener('touchend', () => {
+      lastTouchDistance = 0;
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.hidden) return;
+
+      if (event.key === 'Escape') {
+        closeLightbox();
+      } else if (event.key === '+' || event.key === '=') {
+        setScale(scale + ZOOM_STEP);
+      } else if (event.key === '-') {
+        setScale(scale - ZOOM_STEP);
+      } else if (event.key === '0') {
+        resetTransform();
+      }
+    });
+  }
+
+  // =============================================
+  // 12. Cookie Consent + Analytics Loader
   // =============================================
   function initCookieConsent() {
     const CONSENT_KEY = 'cookie_analytics_consent_v1';
@@ -540,6 +754,7 @@
     initActiveNavLink();
     initFormHandling();
     initIcons();
+    initReviewLightbox();
     initCookieConsent();
     // initParallax(); // Uncomment if you want parallax effect
   }
